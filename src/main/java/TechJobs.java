@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -10,7 +7,7 @@ public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -26,7 +23,9 @@ public class TechJobs {
         actionChoices.put("list", "List");
 
         System.out.println("Welcome to LaunchCode's TechJobs App!");
+        //System.out.println(columnChoices);
 
+        
         // Allow the user to search until they manually quit
         while (true) {
 
@@ -59,7 +58,7 @@ public class TechJobs {
 
                 // What is their search term?
                 System.out.println("\nSearch term:");
-                String searchTerm = in.nextLine();
+                String searchTerm = in.nextLine().toUpperCase();
 
                 if (searchField.equals("all")) {
                     printJobs(JobData.findByValue(searchTerm));
@@ -112,14 +111,39 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        if (someJobs.size() == 0) {
+            System.out.println("No Results");
+        } else {
 
-        System.out.println("printJobs is not implemented yet");
+            for (HashMap<String, String> someJob : someJobs) {
+                System.out.println("*****");
+                Set<String> keySet = someJob.keySet();
+                ArrayList<String> listOfKeys = new ArrayList<String>(keySet);
+
+                Collection<String> values = someJob.values();
+                ArrayList<String> listOfValues = new ArrayList<>(values);
+
+                for(int i=0; i<listOfKeys.size(); i++) {
+                   // System.out.println(listOfKeys.get(i));
+                    System.out.println(listOfKeys.get(i) + ":" + listOfValues.get(i));
+                }
+
+               // System.out.println(listOfKeys);
+               // System.out.println(listOfValues);
+
+                System.out.println("*****\n");
+
+                }
+            }
+        }
+        //System.out.println("printJobs is not implemented yet");
     }
-}
+
+

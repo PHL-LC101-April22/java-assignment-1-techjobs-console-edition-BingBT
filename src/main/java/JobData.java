@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -79,7 +76,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toUpperCase().contains(value)) {
                 jobs.add(row);
             }
         }
@@ -93,13 +90,37 @@ public class JobData {
      * @param value The search term to look for
      * @return      List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {
 
         // load data, if not already loaded
         loadData();
 
         // TODO - implement this method
-        return null;
+        //create an empty ArrayList<HashMap< , >> to hold matchingItems
+        //get the value out of each job
+        //get the value out of each job's value
+        //then loop through each word in job's value(which is job's value's value)
+        //if the word in job's value match with searchValue, add job into matchingItems ArrayList<HashMap>
+        //we only want to print each job one time, so if matchingItems contains job we pass it over (continue)
+        ArrayList<HashMap<String, String>> matchingItems = new ArrayList<>();
+        for (HashMap<String, String> job : allJobs) {
+
+            Collection<String> jobValue = job.values();
+            ArrayList<String> listOfJobValue = new ArrayList<>(jobValue);
+
+            for (int i = 0; i < listOfJobValue.size(); i++) {
+
+                if (listOfJobValue.get(i).toUpperCase().contains(searchTerm)) {
+                    if (matchingItems.contains(job)) {
+                        continue;
+                    }
+                    matchingItems.add(job);
+                }
+            }
+
+
+        }
+        return matchingItems;
     }
 
     /**
